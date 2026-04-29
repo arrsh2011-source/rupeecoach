@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>RupeeCoach — AI Finance Coach for India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Geist:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --g: #16a069;
+  --g2: #0d7a50;
+  --gl: #e8f7f1;
+  --gd: #094d34;
+  --amber: #c47d0e;
+  --al: #fef3dc;
+  --red: #dc3545;
+  --rl: #fdecea;
+  --blue: #2563eb;
+  --bl: #eff6ff;
+  --bg: #f7f6f2;
+  --card: #ffffff;
+  --border: rgba(0,0,0,0.07);
+  --border2: rgba(0,0,0,0.13);
+  --text: #141412;
+  --t2: #5c5c58;
+  --t3: #9c9c96;
+  --r: 14px;
+  --rs: 9px;
+  --rx: 22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Geist',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;min-height:100vh}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(247,246,242,0.88);backdrop-filter:blur(16px);
+  border-bottom:0.5px solid var(--border2);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.5rem;height:58px;
+}
+.logo{font-family:'Fraunces',serif;font-size:21px;font-weight:400;letter-spacing:-.3px}
+.logo span{color:var(--g)}
+.nav-r{display:flex;align-items:center;gap:1.5rem}
+.nav-links{display:flex;gap:1.75rem;list-style:none}
+.nav-links a{font-size:13px;color:var(--t2);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--text)}
+.btn-nav{
+  background:var(--text);color:#fff;border:none;
+  padding:8px 20px;border-radius:40px;font-size:13px;
+  font-family:'Geist',sans-serif;font-weight:500;cursor:pointer;
+  transition:opacity .15s;
+}
+.btn-nav:hover{opacity:.85}
+
+/* ── HERO ── */
+.hero{
+  max-width:760px;margin:0 auto;
+  padding:5.5rem 2rem 2rem;text-align:center;
+}
+.hero-chip{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--gl);color:var(--gd);
+  padding:5px 14px;border-radius:40px;
+  font-size:12px;font-weight:500;margin-bottom:1.75rem;
+  border:1px solid rgba(22,160,105,.18);
+}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--g);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+h1{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:clamp(2.6rem,5.5vw,4rem);
+  line-height:1.1;margin-bottom:1.25rem;letter-spacing:-.5px;
+}
+h1 i{color:var(--g);font-style:italic}
+.hero-p{
+  font-size:17px;color:var(--t2);max-width:500px;
+  margin:0 auto 2.5rem;font-weight:300;line-height:1.75;
+}
+.hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:3rem}
+.btn-p{
+  background:var(--g);color:#fff;border:none;
+  padding:13px 28px;border-radius:40px;font-size:14px;
+  font-family:'Geist',sans-serif;font-weight:500;cursor:pointer;
+  transition:background .15s,transform .1s;
+}
+.btn-p:hover{background:var(--g2);transform:translateY(-1px)}
+.btn-s{
+  background:transparent;color:var(--text);
+  border:1px solid var(--border2);
+  padding:13px 28px;border-radius:40px;font-size:14px;
+  font-family:'Geist',sans-serif;cursor:pointer;transition:background .15s;
+}
+.btn-s:hover{background:var(--card)}
+.hero-stats{
+  display:flex;gap:2.5rem;justify-content:center;
+  padding-top:1.5rem;border-top:0.5px solid var(--border2);
+}
+.hstat-val{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:300;color:var(--text)}
+.hstat-lbl{font-size:12px;color:var(--t3);margin-top:2px}
+
+/* ── DASHBOARD ── */
+.dash-wrap{max-width:960px;margin:3rem auto;padding:0 1.5rem}
+.dash-frame{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:24px;overflow:hidden;
+}
+.dash-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.5rem;border-bottom:0.5px solid var(--border);
+  background:var(--card);
+}
+.dash-logo{font-family:'Fraunces',serif;font-size:17px;font-weight:400}
+.dash-logo span{color:var(--g)}
+.dash-user{display:flex;align-items:center;gap:8px}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--gl);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--gd)}
+.dash-nav{
+  display:flex;background:var(--bg);
+  border-bottom:0.5px solid var(--border2);
+  padding:0 1.5rem;overflow-x:auto;
+}
+.tab{
+  font-size:13px;padding:12px 16px;background:none;border:none;
+  cursor:pointer;color:var(--t2);font-family:'Geist',sans-serif;
+  border-bottom:2px solid transparent;margin-bottom:-0.5px;
+  white-space:nowrap;transition:color .15s;
+}
+.tab.on{color:var(--g);border-bottom-color:var(--g);font-weight:500}
+.tab:hover:not(.on){color:var(--text)}
+.dash-body{padding:1.5rem}
+.tsec{display:none}.tsec.on{display:block}
+
+/* ── STATS ROW ── */
+.srow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.sc{background:var(--bg);border-radius:var(--rs);padding:14px}
+.sc-lbl{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.sc-val{font-size:21px;font-weight:500}
+.sc-sub{font-size:11px;color:var(--t2);margin-top:2px}
+
+/* ── SCORE RING ── */
+.ring-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:1.5rem}
+.ring-lbl{font-size:13px;color:var(--t2);margin-top:8px}
+
+/* ── METRIC CARDS ── */
+.mgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.mc{
+  background:var(--bg);border:0.5px solid var(--border);
+  border-radius:var(--r);padding:1rem 1.1rem;
+}
+.mc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px}
+.mc-name{font-size:13px;font-weight:500}
+.mc-val{font-size:13px;color:var(--t2)}
+.mc-sub{font-size:11px;color:var(--t3);margin-bottom:10px}
+.mc-foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.mc-pts{font-size:12px;color:var(--t2)}
+.pill{font-size:11px;padding:2px 10px;border-radius:20px;font-weight:500}
+.poor{background:var(--rl);color:#8b1a1a}
+.fair{background:var(--al);color:#7a4d00}
+.good{background:#edf5e1;color:#2d5a0e}
+.great{background:var(--gl);color:var(--gd)}
+
+/* ── GOALS ── */
+.gform{display:grid;grid-template-columns:1fr 110px 100px 80px auto;gap:8px;margin-bottom:1.25rem}
+.ginp{
+  padding:9px 12px;font-size:13px;
+  border:0.5px solid var(--border2);border-radius:var(--rs);
+  background:var(--card);color:var(--text);
+  font-family:'Geist',sans-serif;outline:none;transition:border-color .15s;
+}
+.ginp:focus{border-color:var(--g)}
+.ginp::placeholder{color:var(--t3)}
+.gadd{
+  background:var(--g);color:#fff;border:none;
+  padding:9px 18px;border-radius:var(--rs);font-size:13px;
+  font-family:'Geist',sans-serif;font-weight:500;cursor:pointer;
+  white-space:nowrap;transition:background .15s;
+}
+.gadd:hover{background:var(--g2)}
+.glist{display:flex;flex-direction:column;gap:10px}
+.gcard{
+  background:var(--card);border:0.5px solid var(--border);
+  border-radius:var(--r);padding:1rem 1.25rem;
+  animation:slideIn .2s ease;
+}
+@keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.gtop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.gname{font-size:14px;font-weight:500}
+.gmeta{font-size:12px;color:var(--t2);margin-top:2px}
+.gdel{font-size:12px;color:var(--t3);background:none;border:none;cursor:pointer;font-family:'Geist',sans-serif;transition:color .15s;padding:2px 6px}
+.gdel:hover{color:var(--red)}
+.ptrack{height:5px;background:var(--bg);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.pfill{height:100%;border-radius:3px;transition:width .5s ease}
+.gfoot{display:flex;justify-content:space-between;font-size:12px;color:var(--t2)}
+.gempty{font-size:13px;color:var(--t3);padding:1rem 0}
+
+/* ── SPENDING ── */
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem}
+.ccard{
+  background:var(--bg);border:0.5px solid var(--border);
+  border-radius:var(--r);padding:1rem;cursor:pointer;
+  transition:border-color .15s,background .15s;
+}
+.ccard:hover{background:var(--card)}
+.ccard.sel{border:1.5px solid var(--g);background:var(--card)}
+.cname{font-size:12px;color:var(--t2);margin-bottom:5px}
+.camt{font-size:19px;font-weight:500}
+.cpct{font-size:11px;color:var(--t3);margin-top:2px;margin-bottom:8px}
+.cbar{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.cbfill{height:100%;border-radius:2px;transition:width .4s}
+.sdetail{
+  background:var(--bg);border-radius:var(--r);
+  padding:1rem 1.25rem;min-height:80px;margin-bottom:1.5rem;
+}
+.sdtitle{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.srow2{display:flex;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid var(--border);font-size:13px}
+.srow2:last-child{border-bottom:none}
+.stotal{display:flex;justify-content:space-between;padding:10px 0 0;font-size:13px;font-weight:500;color:var(--t2)}
+
+/* ── CHAT ── */
+.cwrap{display:flex;flex-direction:column;gap:12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{
+  font-size:12px;padding:6px 14px;
+  border:0.5px solid var(--border2);border-radius:20px;
+  cursor:pointer;background:var(--card);color:var(--t2);
+  font-family:'Geist',sans-serif;transition:all .15s;
+}
+.chip:hover{background:var(--gl);color:var(--gd);border-color:var(--g)}
+.cmsgs{
+  display:flex;flex-direction:column;gap:10px;
+  min-height:220px;max-height:360px;overflow-y:auto;padding:4px 0;
+}
+.msg{max-width:78%;padding:10px 15px;border-radius:16px;font-size:13px;line-height:1.55}
+.msg.bot{background:var(--bg);color:var(--text);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.user{background:var(--g);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.cinrow{display:flex;gap:8px}
+.cinput{
+  flex:1;font-size:13px;padding:11px 16px;
+  border:0.5px solid var(--border2);border-radius:40px;
+  background:var(--card);color:var(--text);
+  font-family:'Geist',sans-serif;outline:none;transition:border-color .15s;
+}
+.cinput:focus{border-color:var(--g)}
+.csend{
+  padding:11px 22px;background:var(--g);color:#fff;
+  border:none;border-radius:40px;cursor:pointer;
+  font-family:'Geist',sans-serif;font-size:13px;font-weight:500;
+  transition:background .15s;
+}
+.csend:hover{background:var(--g2)}
+.typing{display:flex;gap:4px;align-items:center;padding:10px 14px;background:var(--bg);border-radius:16px;align-self:flex-start}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--t3);animation:bounce .9s infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
+/* ── FEATURES ── */
+.fsec{padding:5rem 1.5rem}
+.sec-head{text-align:center;margin-bottom:3rem}
+.sec-head h2{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(1.9rem,3.5vw,2.8rem);margin-bottom:.75rem;letter-spacing:-.3px}
+.sec-head p{font-size:16px;color:var(--t2);font-weight:300}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:940px;margin:0 auto}
+.fc{
+  background:var(--card);border:0.5px solid var(--border);
+  border-radius:var(--r);padding:1.5rem;
+  transition:border-color .2s,transform .2s;
+}
+.fc:hover{border-color:var(--g);transform:translateY(-2px)}
+.ficon{
+  width:38px;height:38px;border-radius:var(--rs);
+  background:var(--gl);display:flex;align-items:center;
+  justify-content:center;margin-bottom:1rem;
+}
+.ficon svg{width:18px;height:18px;stroke:var(--gd);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.fc h3{font-size:14px;font-weight:500;margin-bottom:6px}
+.fc p{font-size:13px;color:var(--t2);line-height:1.6}
+
+/* ── HOW IT WORKS ── */
+.how-sec{padding:0 1.5rem 5rem}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:800px;margin:0 auto}
+.how-step{text-align:center;padding:1.5rem}
+.step-num{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--g);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',serif;font-size:1.1rem;
+  margin:0 auto 1rem;
+}
+.how-step h3{font-size:14px;font-weight:500;margin-bottom:6px}
+.how-step p{font-size:13px;color:var(--t2);line-height:1.6}
+
+/* ── PRICING ── */
+.psec{padding:5rem 1.5rem;background:var(--card);border-top:0.5px solid var(--border2);border-bottom:0.5px solid var(--border2)}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:840px;margin:2.5rem auto 0}
+.pcard{
+  background:var(--bg);border:0.5px solid var(--border2);
+  border-radius:var(--r);padding:1.75rem;
+}
+.pcard.pop{background:var(--card);border:1.5px solid var(--g)}
+.pbadge{
+  display:inline-block;font-size:11px;padding:3px 10px;
+  background:var(--g);color:#fff;border-radius:20px;
+  margin-bottom:1rem;font-weight:500;
+}
+.pname{font-size:13px;color:var(--t2);margin-bottom:4px}
+.pprice{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:300;margin-bottom:4px}
+.pprice span{font-family:'Geist',sans-serif;font-size:14px;font-weight:300;color:var(--t2)}
+.pdiv{height:0.5px;background:var(--border2);margin:1.25rem 0}
+.plist{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:1.5rem}
+.plist li{
+  font-size:13px;color:var(--t2);
+  display:flex;align-items:center;gap:8px;
+}
+.plist li::before{
+  content:'';width:14px;height:14px;border-radius:50%;flex-shrink:0;
+  background:var(--gl);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3 7l3 3 5-5' stroke='%23094d34' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+}
+.pbtn{
+  width:100%;padding:11px;border-radius:40px;
+  font-size:14px;font-family:'Geist',sans-serif;font-weight:500;cursor:pointer;
+  transition:all .15s;
+}
+.pbtn.out{background:transparent;border:1px solid var(--border2);color:var(--text)}
+.pbtn.out:hover{background:var(--bg)}
+.pbtn.fill{background:var(--g);border:none;color:#fff}
+.pbtn.fill:hover{background:var(--g2)}
+
+/* ── CTA BANNER ── */
+.cta-banner{
+  max-width:700px;margin:5rem auto;padding:3rem 2rem;
+  background:var(--text);border-radius:24px;text-align:center;
+  color:#fff;
+}
+.cta-banner h2{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:.75rem;color:#fff}
+.cta-banner p{font-size:15px;color:rgba(255,255,255,.65);margin-bottom:2rem;font-weight:300}
+.cta-banner .btn-p{background:#fff;color:var(--text)}
+.cta-banner .btn-p:hover{background:var(--bg)}
+
+/* ── FOOTER ── */
+footer{
+  border-top:0.5px solid var(--border2);padding:2rem 2.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+}
+.flogo{font-family:'Fraunces',serif;font-size:18px;font-weight:400}
+.flogo span{color:var(--g)}
+.flinks{display:flex;gap:1.5rem}
+.flinks a{font-size:13px;color:var(--t3);text-decoration:none;transition:color .15s}
+.flinks a:hover{color:var(--text)}
+.fcopy{font-size:13px;color:var(--t3)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:680px){
+  .srow{grid-template-columns:repeat(2,1fr)}
+  .mgrid{grid-template-columns:1fr}
+  .gform{grid-template-columns:1fr 1fr}
+  .gadd{grid-column:1/-1}
+  .cgrid{grid-template-columns:repeat(2,1fr)}
+  .fgrid,.how-grid,.pgrid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .hero{padding:3.5rem 1.25rem 1.5rem}
+  .hero-stats{gap:1.5rem}
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.hero{animation:fadeUp .5s ease both}
+.dash-wrap{animation:fadeUp .5s .08s ease both}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Rupee<span>Coach</span></div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <div class="nav-r">
+    <button class="btn-nav" onclick="document.getElementById('app').scrollIntoView({behavior:'smooth'})">Open dashboard</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-chip"><div class="live-dot"></div>Free during beta</div>
+  <h1>Take control of<br/>your money, <i>finally.</i></h1>
+  <p class="hero-p">RupeeCoach is an AI-powered finance coach built for India. Get your financial health score, track goals, and get real answers — in plain language.</p>
+  <div class="hero-btns">
+    <button class="btn-p" onclick="document.getElementById('app').scrollIntoView({behavior:'smooth'})">Try the dashboard</button>
+    <button class="btn-s" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">See features</button>
+  </div>
+  <div class="hero-stats">
+    <div><div class="hstat-val">₹0</div><div class="hstat-lbl">to get started</div></div>
+    <div><div class="hstat-val">4</div><div class="hstat-lbl">tools in one place</div></div>
+    <div><div class="hstat-val">AI</div><div class="hstat-lbl">powered coach</div></div>
+  </div>
+</section>
+
+<!-- DASHBOARD APP -->
+<div class="dash-wrap" id="app">
+  <div class="dash-frame">
+    <div class="dash-bar">
+      <div class="dash-logo">Rupee<span>Coach</span></div>
+      <div class="dash-user">
+        <div class="avatar">U</div>
+        <span style="font-size:13px;color:var(--t2)">My dashboard</span>
+      </div>
+    </div>
+    <div class="dash-nav">
+      <button class="tab on" onclick="switchTab('score',this)">Health score</button>
+      <button class="tab" onclick="switchTab('goals',this)">Goals</button>
+      <button class="tab" onclick="switchTab('spending',this)">Spending</button>
+      <button class="tab" onclick="switchTab('coach',this)">AI coach</button>
+    </div>
+    <div class="dash-body">
+
+      <!-- SCORE -->
+      <div id="t-score" class="tsec on">
+        <div class="srow">
+          <div class="sc"><div class="sc-lbl">Monthly income</div><div class="sc-val">₹55,000</div></div>
+          <div class="sc"><div class="sc-lbl">Total saved</div><div class="sc-val">₹1.2L</div></div>
+          <div class="sc"><div class="sc-lbl">Active SIPs</div><div class="sc-val">3</div></div>
+          <div class="sc"><div class="sc-lbl">Score trend</div><div class="sc-val" style="color:var(--g)">+6</div><div class="sc-sub">vs last month</div></div>
+        </div>
+        <div class="ring-wrap">
+          <svg width="150" height="150" viewBox="0 0 150 150">
+            <circle cx="75" cy="75" r="60" fill="none" stroke-width="10" stroke="#e8f7f1"/>
+            <circle id="ring" cx="75" cy="75" r="60" fill="none" stroke-width="10" stroke="#16a069"
+              stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="377"
+              transform="rotate(-90 75 75)" style="transition:stroke-dashoffset .6s ease,stroke .5s"/>
+            <text x="75" y="70" text-anchor="middle" font-size="34" font-weight="500" fill="#16a069" id="rnum" font-family="sans-serif">0</text>
+            <text x="75" y="88" text-anchor="middle" font-size="11" fill="#9c9c96" font-family="sans-serif">out of 100</text>
+          </svg>
+          <div class="ring-lbl" id="rlbl">Adjust the sliders below</div>
+        </div>
+        <div class="mgrid">
+          <div class="mc">
+            <div class="mc-head"><span class="mc-name">Savings rate</span><span class="mc-val" id="v1">20%</span></div>
+            <div class="mc-sub">% of income saved each month</div>
+            <input type="range" min="0" max="60" step="1" value="20" id="s1" style="width:100%" oninput="calc()"/>
+            <div class="mc-foot"><span class="mc-pts" id="p1">0 / 30 pts</span><span class="pill" id="pl1"></span></div>
+          </div>
+          <div class="mc">
+            <div class="mc-head"><span class="mc-name">Debt-to-income</span><span class="mc-val" id="v2">30%</span></div>
+            <div class="mc-sub">monthly debt payments / income</div>
+            <input type="range" min="0" max="80" step="1" value="30" id="s2" style="width:100%" oninput="calc()"/>
+            <div class="mc-foot"><span class="mc-pts" id="p2">0 / 25 pts</span><span class="pill" id="pl2"></span></div>
+          </div>
+          <div class="mc">
+            <div class="mc-head"><span class="mc-name">Investment diversity</span><span class="mc-val" id="v3">2 types</span></div>
+            <div class="mc-sub">FD, SIP, stocks, gold, PPF, NPS…</div>
+            <input type="range" min="0" max="6" step="1" value="2" id="s3" style="width:100%" oninput="calc()"/>
+            <div class="mc-foot"><span class="mc-pts" id="p3">0 / 25 pts</span><span class="pill" id="pl3"></span></div>
+          </div>
+          <div class="mc">
+            <div class="mc-head"><span class="mc-name">Emergency fund</span><span class="mc-val" id="v4">3 months</span></div>
+            <div class="mc-sub">months of expenses you can cover</div>
+            <input type="range" min="0" max="12" step="1" value="3" id="s4" style="width:100%" oninput="calc()"/>
+            <div class="mc-foot"><span class="mc-pts" id="p4">0 / 20 pts</span><span class="pill" id="pl4"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GOALS -->
+      <div id="t-goals" class="tsec">
+        <div class="gform">
+          <input class="ginp" id="gn" placeholder="Goal name (e.g. MacBook, Goa trip)"/>
+          <input class="ginp" id="gt" type="number" placeholder="Target ₹"/>
+          <input class="ginp" id="gs" type="number" placeholder="Saved ₹"/>
+          <input class="ginp" id="gm" type="number" placeholder="Months"/>
+          <button class="gadd" onclick="addGoal()">+ Add</button>
+        </div>
+        <div class="glist" id="glist"></div>
+      </div>
+
+      <!-- SPENDING -->
+      <div id="t-spending" class="tsec">
+        <div style="font-size:13px;color:var(--t2);margin-bottom:14px">April 2026 — tap any category to drill in</div>
+        <div class="cgrid" id="cgrid"></div>
+        <div class="sdetail" id="sdetail"><div style="font-size:13px;color:var(--t3)">Select a category to see breakdown</div></div>
+      </div>
+
+      <!-- COACH -->
+      <div id="t-coach" class="tsec">
+        <div class="cwrap">
+          <div class="chips" id="chips"></div>
+          <div class="cmsgs" id="cmsgs"></div>
+          <div class="cinrow">
+            <input class="cinput" id="cin" placeholder="Ask me anything about your finances…" onkeydown="if(event.key==='Enter')sendMsg()"/>
+            <button class="csend" onclick="sendMsg()">Send</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="fsec" id="features">
+  <div class="sec-head">
+    <h2>Everything your money needs,<br/>in one place</h2>
+    <p>Built specifically for Indian users — SIPs, 80C, UPI, and all.</p>
+  </div>
+  <div class="fgrid">
+    <div class="fc">
+      <div class="ficon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+      <h3>Financial health score</h3>
+      <p>A single 0–100 score across savings, debt, investments, and emergency fund — updated monthly.</p>
+    </div>
+    <div class="fc">
+      <div class="ficon"><svg viewBox="0 0 24 24"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></div>
+      <h3>Goal tracker</h3>
+      <p>Set any savings goal and get told exactly how much to put aside each month to hit it on time.</p>
+    </div>
+    <div class="fc">
+      <div class="ficon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+      <h3>Spending breakdown</h3>
+      <p>See exactly where your money goes each month — by category, down to the individual item.</p>
+    </div>
+    <div class="fc">
+      <div class="ficon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <h3>AI coach</h3>
+      <p>Ask anything about saving, investing, or budgeting in plain language and get a clear India-specific answer.</p>
+    </div>
+    <div class="fc">
+      <div class="ficon"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+      <h3>Investment insights</h3>
+      <p>Understand how your SIPs, FDs, and mutual funds are performing — and where the gaps are.</p>
+    </div>
+    <div class="fc">
+      <div class="ficon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+      <h3>Tax savings detector</h3>
+      <p>Find out how much tax you're leaving on the table — 80C, 80D, NPS, HRA — and exactly how to fix it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-sec" id="how">
+  <div class="sec-head">
+    <h2>Simple to get started</h2>
+    <p>No bank account linking required. No complicated setup.</p>
+  </div>
+  <div class="how-grid">
+    <div class="how-step">
+      <div class="step-num">1</div>
+      <h3>Enter your numbers</h3>
+      <p>Tell us your income, savings rate, debts, and investments using simple sliders.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">2</div>
+      <h3>Get your score</h3>
+      <p>See your financial health score instantly with a breakdown of where you stand.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">3</div>
+      <h3>Get a plan</h3>
+      <p>Ask the AI coach what to fix first and get a personalised step-by-step action plan.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="psec" id="pricing">
+  <div class="sec-head">
+    <h2>Simple, honest pricing</h2>
+    <p>Start free. Upgrade when you're ready.</p>
+  </div>
+  <div class="pgrid">
+    <div class="pcard">
+      <div class="pname">Free</div>
+      <div class="pprice">₹0 <span>/ month</span></div>
+      <div class="pdiv"></div>
+      <ul class="plist">
+        <li>Health score (monthly)</li>
+        <li>Up to 3 goals</li>
+        <li>Spending overview</li>
+        <li>5 AI coach questions/month</li>
+      </ul>
+      <button class="pbtn out">Get started</button>
+    </div>
+    <div class="pcard pop">
+      <div class="pbadge">Most popular</div>
+      <div class="pname">Pro</div>
+      <div class="pprice">₹149 <span>/ month</span></div>
+      <div class="pdiv"></div>
+      <ul class="plist">
+        <li>Everything in Free</li>
+        <li>Unlimited goals</li>
+        <li>Unlimited AI coach</li>
+        <li>Tax savings detector</li>
+        <li>Investment insights</li>
+        <li>Weekly score updates</li>
+      </ul>
+      <button class="pbtn fill">Start free trial</button>
+    </div>
+    <div class="pcard">
+      <div class="pname">Family</div>
+      <div class="pprice">₹299 <span>/ month</span></div>
+      <div class="pdiv"></div>
+      <ul class="plist">
+        <li>Everything in Pro</li>
+        <li>Up to 4 members</li>
+        <li>Shared goal planning</li>
+        <li>Family spending view</li>
+        <li>Priority support</li>
+      </ul>
+      <button class="pbtn out">Get started</button>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div style="padding:0 1.5rem">
+  <div class="cta-banner">
+    <h2>Ready to take control<br/>of your money?</h2>
+    <p>Free to start. No credit card needed. Built for India.</p>
+    <button class="btn-p" onclick="document.getElementById('app').scrollIntoView({behavior:'smooth'})">Open my dashboard</button>
+  </div>
+</div>
+
+<footer>
+  <div class="flogo">Rupee<span>Coach</span></div>
+  <div class="flinks">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="fcopy">© 2026 RupeeCoach. Built for India.</div>
+</footer>
+
+<script>
+const GEMINI_KEY = 'AIzaSyAvNI4k529k9ZapETITMRJNKwXvDt5BlRc';
+const SYSTEM = `You are RupeeCoach, a friendly and knowledgeable Indian personal finance assistant. Keep responses concise (2-3 sentences max), practical, and tailored to Indian users. Use Indian financial context: SIP, ELSS, PPF, NPS, 80C, FD, RD, Zerodha, Groww, UPI where relevant. Always use ₹ for currency. Be warm, clear, and encouraging.`;
+
+// ── TAB SWITCHING
+function switchTab(t, btn) {
+  document.querySelectorAll('.tsec').forEach(s => s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('on'));
+  document.getElementById('t-' + t).classList.add('on');
+  btn.classList.add('on');
+}
+
+// ── HEALTH SCORE
+function s1c(v){if(v>=30)return 30;if(v>=20)return 22;if(v>=10)return 14;if(v>=5)return 7;return Math.round(v*1.2)}
+function s2c(v){if(v<=15)return 25;if(v<=30)return 18;if(v<=45)return 10;if(v<=60)return 5;return 0}
+function s3c(v){return[0,4,8,14,20,23,25][Math.min(v,6)]}
+function s4c(v){if(v>=6)return 20;if(v>=3)return 13;if(v>=1)return 6;return 0}
+function getPill(s,mx){const p=s/mx;if(p>=.85)return['Great','great'];if(p>=.6)return['Good','good'];if(p>=.35)return['Fair','fair'];return['Poor','poor']}
+function getLbl(n){if(n>=85)return'Excellent — keep it up!';if(n>=70)return'Good shape — a few tweaks away from great';if(n>=50)return'Fair — there are clear gaps to plug';if(n>=30)return'Needs attention — let\'s fix the basics first';return'Starting out — let\'s build strong habits'}
+function getCol(n){return n>=80?'#16a069':n>=60?'#4a8c1c':n>=40?'#c47d0e':'#dc3545'}
+
+function calc() {
+  const a=+s1.value,b=+s2.value,c=+s3.value,d=+s4.value;
+  v1.textContent=a+'%'; v2.textContent=b+'%';
+  v3.textContent=c+(c===1?' type':' types'); v4.textContent=d+(d===1?' month':' months');
+  const sc=[s1c(a),s2c(b),s3c(c),s4c(d)],mx=[30,25,25,20];
+  const tot=sc.reduce((a,b)=>a+b,0);
+  ['p1','p2','p3','p4'].forEach((id,i)=>{
+    document.getElementById(id).textContent=sc[i]+' / '+mx[i]+' pts';
+    const[t,cls]=getPill(sc[i],mx[i]);
+    const el=document.getElementById('pl'+(i+1));el.textContent=t;el.className='pill '+cls;
+  });
+  const circ=2*Math.PI*60,off=circ-(tot/100)*circ;
+  ring.setAttribute('stroke-dashoffset',off.toFixed(1));
+  const col=getCol(tot);
+  ring.setAttribute('stroke',col);
+  rnum.setAttribute('fill',col);
+  rnum.textContent=tot;
+  rlbl.textContent=getLbl(tot);
+}
+
+const[s1,s2,s3,s4,ring,rnum,rlbl,v1,v2,v3,v4]=['s1','s2','s3','s4','ring','rnum','rlbl','v1','v2','v3','v4'].map(id=>document.getElementById(id));
+calc();
+
+// ── GOALS
+const goals=[], GCOLS=['#16a069','#2563eb','#7c3aed','#c2410c','#c47d0e'];
+function addGoal(){
+  const name=gn.value.trim(),target=+gt.value,saved=Math.min(+gs.value||0,+gt.value||0),months=+gm.value;
+  if(!name||!target||!months)return;
+  goals.push({name,target,saved,months,color:GCOLS[goals.length%GCOLS.length]});
+  [gn,gt,gs,gm].forEach(el=>el.value='');
+  renderGoals();
+}
+function delGoal(i){goals.splice(i,1);renderGoals()}
+function renderGoals(){
+  const el=document.getElementById('glist');
+  if(!goals.length){el.innerHTML='<div class="gempty">No goals yet — add one above to get started</div>';return}
+  el.innerHTML=goals.map((g,i)=>{
+    const pct=Math.round(g.saved/g.target*100);
+    const monthly=Math.ceil(Math.max(0,g.target-g.saved)/g.months);
+    return`<div class="gcard">
+      <div class="gtop">
+        <div><div class="gname">${g.name}</div><div class="gmeta">₹${g.saved.toLocaleString('en-IN')} of ₹${g.target.toLocaleString('en-IN')} &bull; ${g.months} months left</div></div>
+        <button class="gdel" onclick="delGoal(${i})">Remove</button>
+      </div>
+      <div class="ptrack"><div class="pfill" style="width:${pct}%;background:${g.color}"></div></div>
+      <div class="gfoot"><span>${pct}% complete</span><span>Save ₹${monthly.toLocaleString('en-IN')}/month</span></div>
+    </div>`}).join('');
+}
+const[gn,gt,gs,gm]=['gn','gt','gs','gm'].map(id=>document.getElementById(id));
+renderGoals();
+
+// ── SPENDING
+const CATS=[
+  {name:'Food & dining',amt:9200,color:'#c2410c',items:[['Swiggy',3800],['Groceries',3100],['Eating out',2300]]},
+  {name:'Transport',amt:4100,color:'#2563eb',items:[['Uber / Ola',1800],['Fuel',1500],['Metro',800]]},
+  {name:'Entertainment',amt:3600,color:'#7c3aed',items:[['Netflix',649],['Hotstar',899],['Games & apps',2052]]},
+  {name:'Shopping',amt:6800,color:'#c47d0e',items:[['Clothes',3200],['Electronics',2100],['Misc',1500]]},
+  {name:'Utilities',amt:2900,color:'#16a069',items:[['Rent share',1500],['Phone',799],['Electricity',601]]},
+  {name:'Health',amt:1500,color:'#db2777',items:[['Gym',999],['Medicines',501]]},
+];
+const TOT=CATS.reduce((a,c)=>a+c.amt,0);
+let selCat=null;
+
+function renderCats(){
+  document.getElementById('cgrid').innerHTML=CATS.map((c,i)=>`
+    <div class="ccard${selCat===i?' sel':''}" onclick="selC(${i})">
+      <div class="cname">${c.name}</div>
+      <div class="camt">₹${c.amt.toLocaleString('en-IN')}</div>
+      <div class="cpct">${Math.round(c.amt/TOT*100)}% of spend</div>
+      <div class="cbar"><div class="cbfill" style="width:${Math.round(c.amt/TOT*100)}%;background:${c.color}"></div></div>
+    </div>`).join('');
+}
+function selC(i){
+  selCat=i;renderCats();
+  const c=CATS[i];
+  document.getElementById('sdetail').innerHTML=`<div class="sdtitle">${c.name} — breakdown</div>`+
+    c.items.map(([n,a])=>`<div class="srow2"><span>${n}</span><span style="font-weight:500">₹${a.toLocaleString('en-IN')}</span></div>`).join('')+
+    `<div class="stotal"><span>Total</span><span>₹${c.amt.toLocaleString('en-IN')}</span></div>`;
+}
+renderCats();
+
+// ── AI COACH
+const CHIPS=['How do I start a SIP?','Is my savings rate good?','How to reduce debt fast?','What is Section 80C?','Should I invest in gold?','How much term insurance do I need?'];
+let msgs=[{role:'bot',text:'Hi! I\'m your RupeeCoach AI. Ask me anything about saving, investing, or budgeting — I\'ll give you clear, India-specific advice.'}];
+
+function renderMsgs(){
+  const el=document.getElementById('cmsgs');
+  el.innerHTML=msgs.map(m=>m.typing
+    ?`<div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`
+    :`<div class="msg ${m.role}">${m.text}</div>`).join('');
+  el.scrollTop=el.scrollHeight;
+}
+
+document.getElementById('chips').innerHTML=CHIPS.map(c=>`<button class="chip" onclick="chipSend('${c}')">${c}</button>`).join('');
+renderMsgs();
+
+function chipSend(t){document.getElementById('cin').value=t;sendMsg()}
+
+async function sendMsg(){
+  const inp=document.getElementById('cin');
+  const txt=inp.value.trim();if(!txt)return;
+  inp.value='';
+  msgs.push({role:'user',text:txt});
+  msgs.push({role:'bot',typing:true});
+  renderMsgs();
+  try{
+    const res=await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,
+      {method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        system_instruction:{parts:[{text:SYSTEM}]},
+        contents:[{parts:[{text:txt}]}],
+        generationConfig:{maxOutputTokens:300,temperature:0.7}
+      })}
+    );
+    const data=await res.json();
+    msgs=msgs.filter(m=>!m.typing);
+    const reply=data.candidates?.[0]?.content?.parts?.[0]?.text||'Sorry, something went wrong. Please try again.';
+    msgs.push({role:'bot',text:reply});
+  }catch(e){
+    msgs=msgs.filter(m=>!m.typing);
+    msgs.push({role:'bot',text:'Could not connect. Please check your internet connection.'});
+  }
+  renderMsgs();
+}
+</script>
+</body>
+</html>

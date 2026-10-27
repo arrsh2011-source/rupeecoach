@@ -45,7 +45,7 @@ def save_report(session: Session, *, user_id: int, company_id: int, report: Repo
         for e in facts.ledger
     ]
     row.facts = [
-        FactRow(key=f.key, value={"v": f.value}, subject=f.subject, evidence_keys=f.evidence_ids)
+        FactRow(key=f.key, value={"v": f.value, "quote": f.quote}, subject=f.subject, evidence_keys=f.evidence_ids)
         for key in sorted(facts.keys())
         for f in facts.all(key)
     ]
@@ -73,7 +73,11 @@ def load_factset(row: ReportRow) -> FactSet:
     )
     return FactSet(
         ledger,
-        (Fact(key=f.key, value=f.value["v"], subject=f.subject, evidence_ids=f.evidence_keys) for f in row.facts),
+        (
+            Fact(key=f.key, value=f.value["v"], quote=f.value.get("quote"), subject=f.subject,
+                 evidence_ids=f.evidence_keys)
+            for f in row.facts
+        ),
     )
 
 

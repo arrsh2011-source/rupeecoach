@@ -154,6 +154,7 @@ class Fact(BaseModel):
     value: Any
     evidence_ids: list[str]
     subject: str | None = None  # e.g. a founder's name for per-person facts
+    quote: str | None = None  # verbatim source text the fact was extracted from
 
 
 class FactSet:
@@ -174,8 +175,9 @@ class FactSet:
         self._by_key[fact.key].append(fact)
         return fact
 
-    def put(self, key: str, value: Any, *evidence_ids: str, subject: str | None = None) -> Fact:
-        return self.add(Fact(key=key, value=value, evidence_ids=list(evidence_ids), subject=subject))
+    def put(self, key: str, value: Any, *evidence_ids: str, subject: str | None = None,
+            quote: str | None = None) -> Fact:
+        return self.add(Fact(key=key, value=value, evidence_ids=list(evidence_ids), subject=subject, quote=quote))
 
     def all(self, key: str) -> list[Fact]:
         return list(self._by_key.get(key, []))

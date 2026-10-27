@@ -66,6 +66,26 @@ class Settings(BaseSettings):
 
     established_investors: tuple[str, ...] = DEFAULT_ESTABLISHED_INVESTORS
 
+    # data.gov.in "Company Master Data" resource ids (one per Registrar of Companies).
+    # Copy them from each dataset's API tab on data.gov.in, comma-separated.
+    data_gov_in_resource_ids: str = ""
+
+    # Research limits per report (cost control).
+    max_web_searches: int = 8
+    max_website_pages: int = 4
+    narrative_enabled: bool = True
+    http_timeout_seconds: float = 15.0
+    user_agent: str = "TrueCapBot/0.1 (+https://truecap.example/bot; public-data diligence)"
+
+
+# USD per million tokens (input, output), and per web search. Update if pricing changes.
+MODEL_PRICES_USD: dict[str, tuple[float, float]] = {
+    "claude-sonnet-5-5": (2.00, 10.00),
+    "claude-haiku-5-5": (0.10, 0.50),
+    "claude-opus-5-5": (4.00, 20.00),
+}
+WEB_SEARCH_USD = 10.00 / 1000
+
 
 @lru_cache
 def get_settings() -> Settings:
